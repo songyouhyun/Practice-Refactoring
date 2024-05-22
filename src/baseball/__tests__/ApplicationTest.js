@@ -1,6 +1,6 @@
 import App from "../src/App";
-import Console from "../../../utils/Console";
-import Random from "../../../utils/Random";
+import Console from "../../utils/Console";
+import Random from "../../utils/Random";
 import jest from "jest";
 
 const mockQuestions = (inputs) => {

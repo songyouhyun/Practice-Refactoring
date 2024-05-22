@@ -1,5 +1,5 @@
-import Console from "../../../utils/Console";
-import Random from "../../../utils/Random";
+import Console from "../../utils/Console";
+import Random from "../../utils/Random";
 
 class App {
   async play(): Promise<void> {

@@ -1,10 +1,10 @@
 {
   "extends": ["tsconfig.json"],
-//  "include": ["./examples/**/src/*.ts"],
+//  "include": ["./src/**/src/*.ts"],
   "files": [
-    "./examples/baseball/src/index.ts",
-    "./examples/lotto/src/index.ts",
-    "./examples/racingcar/src/index.ts"
+    "./src/baseball/src/index.ts",
+    "./src/lotto/src/index.ts",
+    "./src/racingcar/src/index.ts"
   ],
   "exclude": ["node_modules", "dist"]
 }

@@ -1,6 +1,6 @@
 import { Player } from "./domain/Player";
 import { Score } from "./domain/Score";
-import Random from '../../../utils/Random';
+import Random from '../../utils/Random';
 import { Input } from "./utils/Input";
 
 const GAME_STATUS = {

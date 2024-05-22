@@ -1,5 +1,5 @@
 import {Pipe} from "./Pipe.js";
-import Console from "../../../../utils/Console.js";
+import Console from "../../../utils/Console.js";
 
 
 export class Input {

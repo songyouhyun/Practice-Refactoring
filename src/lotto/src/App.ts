@@ -1,6 +1,6 @@
 import Lotto from "./Lotto";
-import Console from "../../../utils/Console";
-import Random from "../../../utils/Random";
+import Console from "../../utils/Console";
+import Random from "../../utils/Random";
 import {Pipe} from "../../baseball/src/utils/Pipe";
 
 class App {
