@@ -1,6 +1,5 @@
-import {Pipe} from "./Pipe.js";
+import Pipe from "./Pipe";
 import Console from "../../../utils/Console.js";
-
 
 export class Input {
     static async getNumbers(): Promise<number[]> {
