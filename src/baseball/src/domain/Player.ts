@@ -7,14 +7,22 @@ export class Player {
     }
 
     private validate(numbers) {
+        this.validateLength3(numbers);
+        this.validateNaN(numbers);
+        this.validatePositive(numbers);
+        this.validateDuplicate(numbers);
+    }
+
+    private validateLength3(numbers) {
         if (numbers.length !== 3) {
             throw new Error('[ERROR] 숫자 3개를 입력해주세요.');
         }
+    }
+
+    private validateNaN(numbers) {
         if (numbers.includes(NaN)) {
             throw new Error('[ERROR] 숫자를 입력해주세요.');
         }
-        this.validatePositive(numbers);
-        this.validateDuplicate(numbers);
     }
 
     private validatePositive(numbers) {
