@@ -1,7 +1,7 @@
 import Lotto from "./Lotto";
 import Console from "../../utils/Console";
 import Random from "../../utils/Random";
-import {Pipe} from "../../baseball/src/utils/Pipe";
+import {Pipe} from "../../baseball/src/model/Pipe";
 
 class App {
   async play(): Promise<void> {

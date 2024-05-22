@@ -1,7 +1,8 @@
-import { Player } from "./domain/Player";
-import { Score } from "./domain/Score";
-import Random from '../../utils/Random';
-import { Input } from "./utils/Input";
+import { Player } from "../model/Player";
+import { Score } from "../model/Score";
+import Random from '../../../utils/Random';
+import { InputView } from "../view/InputView";
+import {OutputView} from "../view/OutputView";
 
 const GAME_STATUS = {
     START: 1,
@@ -12,17 +13,18 @@ export class App {
 
     private inputAboutRestartOrEnd: number | undefined;
     private score: Score | undefined;
+    private outputView: OutputView = new OutputView();
 
     async play() {
-        console.log('숫자 야구 게임을 시작합니다');
+        this.outputView.startGame();
 
         do {
             const computer: number[] = this.pickUniqueRandomNumbers(3);
             await this.playRound(computer);
-            this.inputAboutRestartOrEnd = await Input.getRestartOrEnd();
+            this.inputAboutRestartOrEnd = await InputView.getRestartOrEnd();
         } while (this.inputAboutRestartOrEnd != GAME_STATUS.END);
 
-        console.log('게임 종료');
+        this.outputView.endGame();
     }
 
     pickUniqueRandomNumbers(count: number) {
@@ -38,7 +40,7 @@ export class App {
 
     async playRound(computer: number[]): Promise<void> {
         do {
-            const numbers: number[] = await Input.getNumbers();
+            const numbers: number[] = await InputView.getNumbers();
             const player: Player = new Player(numbers);
 
             this.score = new Score();

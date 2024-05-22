@@ -1,7 +1,7 @@
-import Pipe from "./Pipe";
-import Console from "../../../utils/Console.js";
+import Pipe from "../model/Pipe";
+import Console from "../../../utils/Console";
 
-export class Input {
+export class InputView {
     static async getNumbers(): Promise<number[]> {
         const numbers: string = await Console.readLineAsync('숫자를 입력해주세요 : ');
         return Pipe.parseInputToNumbers(numbers);
