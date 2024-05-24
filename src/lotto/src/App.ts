@@ -1,7 +1,7 @@
 import Lotto from "./Lotto";
 import Console from "../../utils/Console";
 import Random from "../../utils/Random";
-import Pipe from "../../baseball/src/model/Pipe";
+import ValidationPipe from "../../baseball/src/model/ValidationPipe";
 
 class App {
   async play(): Promise<void> {
@@ -24,7 +24,7 @@ class App {
     }
 
     const winningNumbersInput: string = await Console.readLineAsync('\n당첨 번호를 입력해 주세요.\n');
-    const winningNumbers: number[] = Pipe.parseInputToNumbers(winningNumbersInput);
+    const winningNumbers: number[] = ValidationPipe.parseNumberArray(winningNumbersInput);
 
     const bonusNumberInput: string = await Console.readLineAsync('\n보너스 번호를 입력해주세요.\n');
     const bonusNumber: number = parseInt(bonusNumberInput);

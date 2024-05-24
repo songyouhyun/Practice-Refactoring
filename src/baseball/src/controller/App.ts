@@ -2,7 +2,7 @@ import { Player } from "../model/Player";
 import { Score } from "../model/Score";
 import Random from '../../../utils/Random';
 import { InputView } from "../view/InputView";
-import {OutputView} from "../view/OutputView";
+import { OutputView } from "../view/OutputView";
 
 const GAME_STATUS = {
     START: 1,
@@ -14,7 +14,7 @@ class App {
     private inputAboutRestartOrEnd: number | undefined;
     private score: Score | undefined;
 
-    async play() {
+    async play(): Promise<void> {
         OutputView.startGame();
 
         do {
