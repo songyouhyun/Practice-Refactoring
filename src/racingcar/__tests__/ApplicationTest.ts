@@ -1,24 +1,26 @@
-import App from "../src/App.ts";
-import { MissionUtils } from "@woowacourse/mission-utils";
+import Console from "../../utils/Console";
+import Random from "../../utils/Random";
+import App from "../src/App";
 
-const mockQuestions = (inputs) => {
-  MissionUtils.Console.readLineAsync = jest.fn();
+const mockQuestions = (inputs: string[]) => {
+  Console.readLineAsync = jest.fn();
+  const mockReadLineAsync = Console.readLineAsync as jest.Mock;
 
-  MissionUtils.Console.readLineAsync.mockImplementation(() => {
+  mockReadLineAsync.mockImplementation(() => {
     const input = inputs.shift();
     return Promise.resolve(input);
   });
 };
 
-const mockRandoms = (numbers) => {
-  MissionUtils.Random.pickNumberInRange = jest.fn();
+const mockRandoms = (numbers: number[]): void => {
+  Random.pickNumberInRange = jest.fn();
   numbers.reduce((acc, number) => {
-    return acc.mockReturnValueOnce(number);
-  }, MissionUtils.Random.pickNumberInRange);
+    return (acc as jest.Mock).mockReturnValueOnce(number);
+  }, Random.pickNumberInRange);
 };
 
 const getLogSpy = () => {
-  const logSpy = jest.spyOn(MissionUtils.Console, "print");
+  const logSpy = jest.spyOn(Console, "print");
   logSpy.mockClear();
   return logSpy;
 };
@@ -37,7 +39,7 @@ describe("자동차 경주 게임", () => {
     mockRandoms([...randoms]);
 
     // when
-    const app = new App();
+    const app: App = new App();
     await app.play();
 
     // then
@@ -54,7 +56,7 @@ describe("자동차 경주 게임", () => {
     mockQuestions(inputs);
 
     // when
-    const app = new App();
+    const app: App = new App();
 
     // then
     await expect(app.play()).rejects.toThrow("[ERROR]");

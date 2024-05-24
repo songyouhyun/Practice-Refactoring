@@ -1,21 +1,21 @@
-import App from "../src/controller/App";
 import Console from "../../utils/Console";
 import Random from "../../utils/Random";
-import jest from "jest";
+import App from "../src/controller/App";
 
-const mockQuestions = (inputs) => {
+const mockQuestions = (inputs: string[]) => {
   Console.readLineAsync = jest.fn();
+  const mockReadLineAsync = Console.readLineAsync as jest.Mock;
 
-  Console.readLineAsync.mockImplementation(() => {
+  mockReadLineAsync.mockImplementation(() => {
     const input = inputs.shift();
     return Promise.resolve(input);
   });
 };
 
-const mockRandoms = (numbers) => {
+const mockRandoms = (numbers: number[]): void => {
   Random.pickNumberInRange = jest.fn();
   numbers.reduce((acc, number) => {
-    return acc.mockReturnValueOnce(number);
+    return (acc as jest.Mock).mockReturnValueOnce(number);
   }, Random.pickNumberInRange);
 };
 
@@ -25,23 +25,23 @@ const getLogSpy = () => {
   return logSpy;
 };
 
-describe("숫자 야구 게임", () => {
-  test("게임 종료 후 재시작", async () => {
+describe("숫자 야구 게임", (): void => {
+  test("게임 종료 후 재시작", async (): Promise<void> => {
     // given
-    const randoms = [1, 3, 5, 5, 8, 9];
-    const answers = ["246", "135", "1", "597", "589", "2"];
-    const logSpy = getLogSpy();
-    const messages = ["낫싱", "3스트라이크", "1볼 1스트라이크", "3스트라이크", "게임 종료"];
+    const randoms: number[] = [1, 3, 5, 5, 8, 9];
+    const answers: string[] = ["246", "135", "1", "597", "589", "2"];
+    const logSpy: jest.SpyInstance = getLogSpy();
+    const messages: string[] = ["낫싱", "3스트라이크", "1볼 1스트라이크", "3스트라이크", "게임 종료"];
 
     mockRandoms(randoms);
     mockQuestions(answers);
 
     // when
-    const app = new App();
+    const app: App = new App();
     await expect(app.play()).resolves.not.toThrow();
 
     // then
-    messages.forEach((output) => {
+    messages.forEach((output: string): void => {
       expect(logSpy).toHaveBeenCalledWith(expect.stringContaining(output));
     });
   });
@@ -55,7 +55,7 @@ describe("숫자 야구 게임", () => {
     mockQuestions(answers);
 
     // when & then
-    const app = new App();
+    const app: App = new App();
 
     await expect(app.play()).rejects.toThrow("[ERROR]");
   });

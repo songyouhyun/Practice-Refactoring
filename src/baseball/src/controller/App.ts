@@ -9,14 +9,13 @@ const GAME_STATUS = {
     END: 2
 }
 
-export class App {
+class App {
 
     private inputAboutRestartOrEnd: number | undefined;
     private score: Score | undefined;
-    private outputView: OutputView = new OutputView();
 
     async play() {
-        this.outputView.startGame();
+        OutputView.startGame();
 
         do {
             const computer: number[] = this.pickUniqueRandomNumbers(3);
@@ -24,10 +23,10 @@ export class App {
             this.inputAboutRestartOrEnd = await InputView.getRestartOrEnd();
         } while (this.inputAboutRestartOrEnd != GAME_STATUS.END);
 
-        this.outputView.endGame();
+        OutputView.endGame();
     }
 
-    pickUniqueRandomNumbers(count: number) {
+    pickUniqueRandomNumbers(count: number): number[] {
         const uniqueArray: number[] = [];
         while (uniqueArray.length < count) {
             const number: number = Random.pickNumberInRange(1, 9);
@@ -47,7 +46,9 @@ export class App {
             this.score.countStrikeOrBall(computer, player.numbers)
 
             const result: string = this.score.getResultOfScore();
-            console.log(result);
+            OutputView.printResult(result);
         } while (this.score.strike !== 3);
     }
 }
+
+export default App;
