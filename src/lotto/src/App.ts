@@ -75,7 +75,7 @@ class App {
     );
   }
 
-  private calculateTotalWinningAmount(winningCountMap): number {
+  private calculateTotalWinningAmount(winningCountMap: Map<string, number>): number {
     let winningAmount: number = 0;
     winningCountMap.forEach((value, key) => {
       switch (key) {
@@ -99,7 +99,7 @@ class App {
     return winningAmount;
   }
 
-  private calculateRevenue(purchaseAmount, totalAmount): string {
+  private calculateRevenue(purchaseAmount: number, totalAmount: number): string {
     return ((totalAmount / purchaseAmount) * 100).toFixed(1);
   }
 }

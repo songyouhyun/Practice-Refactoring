@@ -8,7 +8,7 @@ export class Score {
         this._ball = 0;
     }
 
-    countStrikeOrBall(computer: number[], player: number[]) {
+    countStrikeOrBall(computer: number[], player: number[]): void {
         this._strike = 0;
         this._ball = 0;
 
