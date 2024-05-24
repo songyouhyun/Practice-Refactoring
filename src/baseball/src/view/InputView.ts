@@ -1,4 +1,4 @@
-import ValidationPipe from "../model/ValidationPipe";
+import ValidationPipe from "./ValidationPipe";
 import Console from "../../../utils/Console";
 
 export class InputView {
