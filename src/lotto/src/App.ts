@@ -1,16 +1,18 @@
 import Lotto from "./Lotto";
 import Console from "../../utils/Console";
 import Random from "../../utils/Random";
-import {Pipe} from "../../baseball/src/model/Pipe";
+import Pipe from "../../baseball/src/model/Pipe";
 
 class App {
   async play(): Promise<void> {
-    const purchaseAmount: string = await Console.readLineAsync('구입금액을 입력해주세요.\n');
-    const lottoCount: number = parseInt(purchaseAmount) / 1000;
+    const purchaseAmountInput: string = await Console.readLineAsync('구입금액을 입력해주세요.\n');
+    const purchaseAmount: number = Number(purchaseAmountInput);
 
-    if (isNaN(lottoCount)) {
-      Console.print("[ERROR]")
+    if (isNaN(purchaseAmount)) {
+      Console.print("[ERROR]");
     }
+
+    const lottoCount: number = purchaseAmount / 1000;
 
     Console.print(`${lottoCount}개를 구매했습니다.`);
     let lottoArray: number[][] = [];
