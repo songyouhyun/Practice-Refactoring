@@ -1,7 +1,7 @@
 class ValidationPipe {
     static parseNumberArray(value: any): number[] {
         const numbers: number[] = value.trim()
-            .split('')
+            .split(',')
             .map(
                 (value: string) => Number(value)
             );
