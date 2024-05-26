@@ -3,27 +3,24 @@ import { Score } from "../model/Score";
 import { InputView } from "../view/InputView";
 import { OutputView } from "../view/OutputView";
 import {Computer} from "../model/Computer";
-
-const GAME_STATUS = {
-    START: 1,
-    END: 2
-}
+import {GameStatus} from "../model/GameStatus";
 
 class App {
+
+    private restartOrEnd: GameStatus;
+
     constructor(
         private readonly inputView: InputView,
         private readonly outputView: OutputView,
     ) {}
 
     async play(): Promise<void> {
-        let restartOrEnd: number;
         this.outputView.printWelcomeMessage();
 
         do {
             const computer: Computer = new Computer();
             await this.playRound(computer.numbers);
-            restartOrEnd = await this.inputView.getRestartOrEnd();
-        } while (restartOrEnd != GAME_STATUS.END);
+        } while (!this.restartOrEnd.isEnd());
 
         this.outputView.printGoodbyeMessage();
     }
@@ -37,7 +34,8 @@ class App {
             score.countStrikeOrBall(computer, player.numbers)
             const result: string = score.getResultOfScore();
             this.outputView.printResult(result);
-        } while (score.checkGameEnd());
+        } while (!score.isGameEnd());
+        this.restartOrEnd = await this.inputView.getRestartOrEnd();
     }
 }
 

@@ -1,6 +1,8 @@
 import Console from "../../utils/Console";
 import Random from "../../utils/Random";
 import App from "../src/controller/App";
+import {ConsoleInputView} from "../src/view/ConsoleInputView";
+import {ConsoleOutputView} from "../src/view/ConsoleOutputView";
 
 const mockQuestions = (inputs: string[]) => {
   Console.readLineAsync = jest.fn();
@@ -37,7 +39,7 @@ describe("숫자 야구 게임", (): void => {
     mockQuestions(answers);
 
     // when
-    const app: App = new App();
+    const app: App = new App(new ConsoleInputView(), new ConsoleOutputView());
     await expect(app.play()).resolves.not.toThrow();
 
     // then
@@ -54,9 +56,9 @@ describe("숫자 야구 게임", (): void => {
     mockRandoms(randoms);
     mockQuestions(answers);
 
-    // when & then
-    const app: App = new App();
+    const app: App = new App(new ConsoleInputView(), new ConsoleOutputView());
 
+    // when & then
     await expect(app.play()).rejects.toThrow("[ERROR]");
   });
 });

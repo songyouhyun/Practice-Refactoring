@@ -1,6 +1,7 @@
 import Console from "../../../utils/Console";
 import ValidationPipe from "./ValidationPipe";
 import {InputView} from "./InputView";
+import {GameStatus} from "../model/GameStatus";
 
 export class ConsoleInputView implements InputView {
     async getNumbers(): Promise<number[]> {
@@ -8,11 +9,12 @@ export class ConsoleInputView implements InputView {
         return ValidationPipe.parseNumberArray(numbers);
     }
 
-    async getRestartOrEnd(): Promise<number> {
+    async getRestartOrEnd(): Promise<GameStatus> {
         const input: string = await Console.readLineAsync(
             '3개의 숫자를 모두 맞히셨습니다! 게임 종료 \n' +
             '게임을 새로 시작하려면 1, 종료하려면 2를 입력하세요. \n'
         );
-        return ValidationPipe.parseNumber(input);
+        const number: number = ValidationPipe.parseNumber(input);
+        return GameStatus.valueOf(number);
     }
 }

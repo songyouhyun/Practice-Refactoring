@@ -46,7 +46,7 @@ export class Score {
         return message;
     }
 
-    checkGameEnd(): boolean {
+    isGameEnd(): boolean {
         return this._strike === 3;
     }
 
