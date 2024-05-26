@@ -3,8 +3,8 @@ describe("문자열 테스트", () => {
     const input = "1,2";
     const result = input.split(",");
 
-    expect(result).toContain("2", "1");
-    expect(result).toContainEqual("1", "2");
+    expect(result).toContain(["2", "1"]);
+    expect(result).toContainEqual(["1", "2"]);
   });
 
   test("split 메서드로 구분자가 포함되지 않은 경우 값을 그대로 반환", () => {

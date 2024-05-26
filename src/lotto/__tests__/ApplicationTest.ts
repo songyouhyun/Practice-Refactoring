@@ -2,20 +2,21 @@ import App from "../src/App";
 import Console from "../../utils/Console";
 import Random from "../../utils/Random";
 
-const mockQuestions = (inputs) => {
+const mockQuestions = (inputs: string[]) => {
   Console.readLineAsync = jest.fn();
+  const mockReadLineAsync = Console.readLineAsync as jest.Mock;
 
-  Console.readLineAsync.mockImplementation(() => {
+  mockReadLineAsync.mockImplementation(() => {
     const input = inputs.shift();
 
     return Promise.resolve(input);
   });
 };
 
-const mockRandoms = (numbers) => {
+const mockRandoms = (numbers: number[][]) => {
   Random.pickUniqueNumbersInRange = jest.fn();
   numbers.reduce((acc, number) => {
-    return acc.mockReturnValueOnce(number);
+    return (acc as jest.Mock).mockReturnValueOnce(number);
   }, Random.pickUniqueNumbersInRange);
 };
 
@@ -25,7 +26,7 @@ const getLogSpy = () => {
   return logSpy;
 };
 
-const runException = async (input) => {
+const runException = async (input: string) => {
   // given
   const logSpy = getLogSpy();
 
