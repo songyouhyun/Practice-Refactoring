@@ -1,8 +1,8 @@
 import { Player } from "../model/Player";
 import { Score } from "../model/Score";
-import Random from '../../../utils/Random';
 import { InputView } from "../view/InputView";
 import { OutputView } from "../view/OutputView";
+import {Computer} from "../model/Computer";
 
 const GAME_STATUS = {
     START: 1,
@@ -11,43 +11,37 @@ const GAME_STATUS = {
 
 class App {
 
-    private inputAboutRestartOrEnd: number | undefined;
-    private score: Score | undefined;
+    private restartOrEnd: number;
+
+    constructor(
+        private readonly inputView: InputView,
+        private readonly outputView: OutputView,
+    ) {}
 
     async play(): Promise<void> {
-        OutputView.startGame();
+        this.outputView.printWelcomeMessage();
 
         do {
-            const computer: number[] = this.pickUniqueRandomNumbers(3);
-            await this.playRound(computer);
-            this.inputAboutRestartOrEnd = await InputView.getRestartOrEnd();
-        } while (this.inputAboutRestartOrEnd != GAME_STATUS.END);
+            const computer: Computer = new Computer();
+            await this.playRound(computer.numbers);
+        } while (this.restartOrEnd != GAME_STATUS.END);
 
-        OutputView.endGame();
-    }
-
-    pickUniqueRandomNumbers(count: number): number[] {
-        const uniqueArray: number[] = [];
-        while (uniqueArray.length < count) {
-            const number: number = Random.pickNumberInRange(1, 9);
-            if (!uniqueArray.includes(number)) {
-                uniqueArray.push(number);
-            }
-        }
-        return uniqueArray;
+        this.outputView.printGoodbyeMessage();
     }
 
     async playRound(computer: number[]): Promise<void> {
+        const score: Score = new Score();
+
         do {
-            const numbers: number[] = await InputView.getNumbers();
+            const numbers: number[] = await this.inputView.getNumbers();
             const player: Player = new Player(numbers);
 
-            this.score = new Score();
-            this.score.countStrikeOrBall(computer, player.numbers)
+            score.countStrikeOrBall(computer, player.numbers)
+            const result: string = score.getResultOfScore();
+            this.outputView.printResult(result);
+        } while (score.checkGameEnd());
 
-            const result: string = this.score.getResultOfScore();
-            OutputView.printResult(result);
-        } while (this.score.strike !== 3);
+        this.restartOrEnd = await this.inputView.getRestartOrEnd();
     }
 }
 
