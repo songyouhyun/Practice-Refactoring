@@ -10,28 +10,26 @@ const GAME_STATUS = {
 }
 
 class App {
-
-    private restartOrEnd: number;
-
     constructor(
         private readonly inputView: InputView,
         private readonly outputView: OutputView,
     ) {}
 
     async play(): Promise<void> {
+        let restartOrEnd: number;
         this.outputView.printWelcomeMessage();
 
         do {
             const computer: Computer = new Computer();
             await this.playRound(computer.numbers);
-        } while (this.restartOrEnd != GAME_STATUS.END);
+            restartOrEnd = await this.inputView.getRestartOrEnd();
+        } while (restartOrEnd != GAME_STATUS.END);
 
         this.outputView.printGoodbyeMessage();
     }
 
-    async playRound(computer: number[]): Promise<void> {
+    private async playRound(computer: number[]): Promise<void> {
         const score: Score = new Score();
-
         do {
             const numbers: number[] = await this.inputView.getNumbers();
             const player: Player = new Player(numbers);
@@ -40,8 +38,6 @@ class App {
             const result: string = score.getResultOfScore();
             this.outputView.printResult(result);
         } while (score.checkGameEnd());
-
-        this.restartOrEnd = await this.inputView.getRestartOrEnd();
     }
 }
 
