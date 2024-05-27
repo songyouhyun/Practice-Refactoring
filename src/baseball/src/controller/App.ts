@@ -20,7 +20,7 @@ class App {
         do {
             const computer: Computer = new Computer();
             await this.playRound(computer.numbers);
-        } while (!this.restartOrEnd.isEnd());
+        } while (!this.restartOrEnd.isGameEnd());
 
         this.outputView.printGoodbyeMessage();
     }
@@ -34,7 +34,7 @@ class App {
             score.countStrikeOrBall(computer, player.numbers)
             const result: string = score.getResultOfScore();
             this.outputView.printResult(result);
-        } while (!score.isGameEnd());
+        } while (!score.isRoundEnd());
         this.restartOrEnd = await this.inputView.getRestartOrEnd();
     }
 }
