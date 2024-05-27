@@ -28,7 +28,7 @@ export class Player {
     private validatePositive(numbers: number[]): void {
         const isPositive: boolean = numbers.every((value) => value > 0);
         if (!isPositive) {
-            throw new Error('[ERROR] 양수인 정수를 입력해주세요.')
+            throw new Error('[ERROR] 양수를 입력해주세요.')
         }
     }
 
