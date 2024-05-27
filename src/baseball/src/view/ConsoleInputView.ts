@@ -15,6 +15,6 @@ export class ConsoleInputView implements InputView {
             '게임을 새로 시작하려면 1, 종료하려면 2를 입력하세요. \n'
         );
         const number: number = ValidationPipe.parseNumber(input);
-        return GameStatus.valueOf(number);
+        return GameStatus.findByCode(number);
     }
 }

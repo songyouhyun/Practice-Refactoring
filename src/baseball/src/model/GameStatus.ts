@@ -4,15 +4,19 @@ export class GameStatus {
 
     private constructor(readonly _code: number) {}
 
-    static values(): GameStatus[] {
+    private static values(): GameStatus[] {
         return [GameStatus.START, GameStatus.END];
     }
 
-    static valueOf(code: number): GameStatus {
-        return this.values().find((e) => e.equals(code));
+    static findByCode(code: number): GameStatus {
+        const status: GameStatus = this.values().find((e) => e.equals(code));
+        if (!status) {
+            throw new Error('[ERROR] GameStatus를 찾을 수 없습니다.');
+        }
+        return status;
     }
 
-    isEnd(): boolean {
+    isGameEnd(): boolean {
         return this._code === GameStatus.END._code;
     }
 
