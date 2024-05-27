@@ -2,27 +2,28 @@ import App from "../src/App";
 import Console from "../../utils/Console";
 import Random from "../../utils/Random";
 
-const mockQuestions = (inputs: string[]): void => {
-  const mockReadLineAsync = jest.fn();
-  Console.readLineAsync = mockReadLineAsync;
+const mockQuestions = (inputs: string[]) => {
+  Console.readLineAsync = jest.fn();
+  const mockReadLineAsync = Console.readLineAsync as jest.Mock;
 
   mockReadLineAsync.mockImplementation(() => {
     const input = inputs.shift();
+
     return Promise.resolve(input);
   });
 };
 
 const mockRandoms = (numbers: number[][]) => {
-  const mockPickUniqueNumbersInRange = jest.fn();
-  Random.pickUniqueNumbersInRange = mockPickUniqueNumbersInRange;
-
+  Random.pickUniqueNumbersInRange = jest.fn();
   numbers.reduce((acc, number) => {
-    return acc.mockReturnValueOnce(number);
-  }, mockPickUniqueNumbersInRange);
+    return (acc as jest.Mock).mockReturnValueOnce(number);
+  }, Random.pickUniqueNumbersInRange);
 };
 
 const getLogSpy = () => {
-  return jest.spyOn(Console, "print");
+  const logSpy = jest.spyOn(Console, "print");
+  logSpy.mockClear();
+  return logSpy;
 };
 
 const runException = async (input: string) => {
@@ -48,7 +49,7 @@ describe("로또 테스트", () => {
     jest.restoreAllMocks();
   })
 
-  test("로또 번호를 구매하고 각 번호에 대해 당첨 여부를 확인하여 수익률을 계산한다.", async () => {
+  test("기능 테스트", async () => {
     // given
     const logSpy = getLogSpy();
 
@@ -92,7 +93,7 @@ describe("로또 테스트", () => {
     });
   });
 
-  test("두 번 이상 당첨된 경우, 수익률을 누적하여 계산한다.", async () => {
+  test("기능 테스트2", async () => {
     // given
     const logSpy = getLogSpy();
 
@@ -120,6 +121,7 @@ describe("로또 테스트", () => {
     ];
 
     logs.forEach((log) => {
+      console.log(log);
       expect(logSpy).toHaveBeenCalledWith(expect.stringContaining(log));
     });
   });
