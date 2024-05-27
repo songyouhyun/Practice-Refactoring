@@ -49,8 +49,4 @@ export class Score {
     isRoundEnd(): boolean {
         return this._strike === 3;
     }
-
-    get strike(): number {
-        return this._strike;
-    }
 }
