@@ -8,13 +8,13 @@ export class Score {
         this._ball = 0;
     }
 
-    countStrikeOrBall(computer: number[], player: number[]): void {
+    countStrikeOrBall(computerNumbers: number[], playerNumbers: number[]): void {
         this._strike = 0;
         this._ball = 0;
 
-        computer.forEach((computerValue, computerIndex) => {
-            player.forEach((playerValue, playerIndex) => {
-                if (playerValue === computerValue) {
+        computerNumbers.forEach((computerNumber, computerIndex) => {
+            playerNumbers.forEach((playerNumber, playerIndex) => {
+                if (playerNumber === computerNumber) {
                     if (playerIndex === computerIndex) {
                         this._strike++;
                     } else {
