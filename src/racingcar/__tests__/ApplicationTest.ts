@@ -2,9 +2,11 @@ import Console from "../../utils/Console";
 import Random from "../../utils/Random";
 import App from "../src/App";
 
+jest.mock('../../utils/Random');
+jest.mock('../../utils/Console');
+
 const mockQuestions = (inputs: string[]) => {
-  Console.readLineAsync = jest.fn();
-  const mockReadLineAsync = Console.readLineAsync as jest.Mock;
+  const mockReadLineAsync = <jest.Mock>Console.readLineAsync;
 
   mockReadLineAsync.mockImplementation(() => {
     const input = inputs.shift();
@@ -13,10 +15,11 @@ const mockQuestions = (inputs: string[]) => {
 };
 
 const mockRandoms = (numbers: number[]): void => {
-  Random.pickNumberInRange = jest.fn();
+  const mockPickNumberInRange = <jest.Mock>Random.pickNumberInRange;
+
   numbers.reduce((acc, number) => {
-    return (acc as jest.Mock).mockReturnValueOnce(number);
-  }, Random.pickNumberInRange);
+    return acc.mockReturnValueOnce(number);
+  }, mockPickNumberInRange);
 };
 
 const getLogSpy = () => {
