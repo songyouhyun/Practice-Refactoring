@@ -1,23 +1,24 @@
-import Random from "../../../utils/Random";
+class Computer {
+    private readonly _numbers: number[];
 
-export class Computer {
-    private readonly _numbers: number[] = [];
-
-    constructor() {
-        this.pickUniqueRandomNumbers(3)
+    constructor(numbers: number[]) {
+        this._numbers = numbers;
+        this.validate();
     }
 
-    private pickUniqueRandomNumbers(count: number): number[] {
-        while (this._numbers.length < count) {
-            const number: number = Random.pickNumberInRange(1, 9);
-            if (!this._numbers.includes(number)) {
-                this._numbers.push(number);
-            }
+    private validate() {
+        if (this._numbers.length !== 3) {
+            throw new Error("[ERROR] 숫자는 3개여야 합니다.");
         }
-        return this._numbers;
+
+        if (new Set(this._numbers).size !== 3) {
+            throw new Error("[ERROR] 중복되는 숫자가 없어야 합니다.");
+        }
     }
 
     get numbers(): number[] {
         return this._numbers;
     }
 }
+
+export default Computer;
