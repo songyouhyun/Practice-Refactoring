@@ -6,7 +6,7 @@ class ValidationPipe {
                 (value: string) => parseInt(value)
             );
 
-        if (numbers.includes(NaN)) {
+        if (numbers.includes(NaN) || numbers.length === 0) {
             throw new Error('[ERROR] 숫자를 입력해주세요.');
         }
         return numbers;
