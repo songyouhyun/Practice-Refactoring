@@ -3,7 +3,7 @@ class ValidationPipe {
         const numbers: number[] = value.trim()
             .split('')
             .map(
-                (value: string) => Number(value)
+                (value: string) => parseInt(value)
             );
 
         if (numbers.includes(NaN)) {
@@ -13,7 +13,7 @@ class ValidationPipe {
     }
 
     static parseNumber(value: any): number {
-        const number: number = Number(value);
+        const number: number = parseInt(value);
         if (isNaN(number)) {
             throw new Error('[ERROR] 숫자를 입력해주세요.');
         }
