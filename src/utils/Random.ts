@@ -65,7 +65,7 @@ class Random {
     }
 
     static pickUniqueNumbersInRange(startInclusive: number, endInclusive: number, count: number): number[] {
-        Random.validateIntsRange(startInclusive, endInclusive, count);
+        Random.validateInRange(startInclusive, endInclusive, count);
 
         const result = [];
 
@@ -76,7 +76,7 @@ class Random {
         return Random.shuffle(result).slice(0, count);
     }
 
-    static validateIntsRange(startInclusive: number, endInclusive: number, count: number): void {
+    static validateInRange(startInclusive: number, endInclusive: number, count: number): void {
         if (
             !Random.isNumber(startInclusive) ||
             !Random.isNumber(endInclusive) ||
