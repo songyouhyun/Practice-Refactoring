@@ -1,42 +1,42 @@
 export class Score {
 
-    private _strike: number;
-    private _ball: number;
+    private _strikeCount: number;
+    private _ballCount: number;
 
     constructor() {
-        this._strike = 0;
-        this._ball = 0;
+        this._strikeCount = 0;
+        this._ballCount = 0;
     }
 
     countStrikeOrBall(computerNumbers: number[], playerNumbers: number[]): void {
-        this._strike = 0;
-        this._ball = 0;
+        this._strikeCount = 0;
+        this._ballCount = 0;
 
         computerNumbers.forEach((computerNumber, computerIndex) => {
             playerNumbers.forEach((playerNumber, playerIndex) => {
                 if (playerNumber === computerNumber) {
                     if (playerIndex === computerIndex) {
-                        this._strike++;
+                        this._strikeCount++;
                     } else {
-                        this._ball++;
+                        this._ballCount++;
                     }
                 }
             });
         });
     }
 
-    getResultOfScore(): string {
+    getResult(): string {
         let message: string = '';
 
-        if (this._ball > 0) {
-            message += `${this._ball}볼`;
+        if (this._ballCount > 0) {
+            message += `${this._ballCount}볼`;
         }
 
-        if (this._strike > 0) {
+        if (this._strikeCount > 0) {
             if (message.length > 0) {
                 message += ' ';
             }
-            message += `${this._strike}스트라이크`;
+            message += `${this._strikeCount}스트라이크`;
         }
 
         if (message.length === 0) {
@@ -47,6 +47,6 @@ export class Score {
     }
 
     isRoundEnd(): boolean {
-        return this._strike === 3;
+        return this._strikeCount === 3;
     }
 }
