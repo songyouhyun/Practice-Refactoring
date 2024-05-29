@@ -36,7 +36,7 @@ class App {
 
             score.countStrikeOrBall(computer.numbers, player.numbers)
 
-            const result: string = score.getResultOfScore();
+            const result: string = score.getResult();
             this.outputView.printResult(result);
         } while (!score.isRoundEnd());
 
