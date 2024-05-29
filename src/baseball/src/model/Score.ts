@@ -49,4 +49,20 @@ export class Score {
     isRoundEnd(): boolean {
         return this._strikeCount === 3;
     }
+
+    get strikeCount(): number {
+        return this._strikeCount;
+    }
+
+    get ballCount(): number {
+        return this._ballCount;
+    }
+
+    set strikeCount(value: number) {
+        this._strikeCount = value;
+    }
+
+    set ballCount(value: number) {
+        this._ballCount = value;
+    }
 }
