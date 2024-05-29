@@ -89,6 +89,18 @@ class Random {
             throw new Error("count cannot be less than zero.");
         }
 
+        if (startInclusive < Number.MIN_SAFE_INTEGER) {
+            throw new Error(
+                "startInclusive cannot be less than Number.MIN_SAFE_INTEGER"
+            );
+        }
+
+        if (endInclusive > Number.MAX_SAFE_INTEGER) {
+            throw new Error(
+                "endInclusive cannot be greater than Number.MAX_SAFE_INTEGER."
+            );
+        }
+
         if (endInclusive - startInclusive + 1 < count) {
             throw new Error(
                 `count: ${count} cannot be greater than the input range (endInclusive - startInclusive): ${
