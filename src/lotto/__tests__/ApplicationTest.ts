@@ -1,4 +1,4 @@
-import App from "../src/App";
+import App from "../src/controller/App";
 import Console from "../../utils/Console";
 import Random from "../../utils/Random";
 

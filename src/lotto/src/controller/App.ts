@@ -1,7 +1,7 @@
-import Lotto from "./Lotto";
-import Console from "../../utils/Console";
-import Random from "../../utils/Random";
-import ValidationPipe from "./ValidationPipe";
+import Lotto from "../model/Lotto";
+import Console from "../../../utils/Console";
+import Random from "../../../utils/Random";
+import ValidationPipe from "../view/ValidationPipe";
 
 class App {
   async play(): Promise<void> {
