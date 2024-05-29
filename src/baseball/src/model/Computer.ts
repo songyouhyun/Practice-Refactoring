@@ -7,6 +7,10 @@ class Computer {
     }
 
     private validate() {
+        if (!this._numbers) {
+            throw new Error("[ERROR] 숫자가 없습니다.");
+        }
+
         if (this._numbers.length !== 3) {
             throw new Error("[ERROR] 숫자는 3개여야 합니다.");
         }
