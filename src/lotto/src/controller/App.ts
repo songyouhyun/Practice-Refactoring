@@ -25,21 +25,23 @@ class App {
     const lottoCount: number = purchaseAmount / 1000;
     this.outputView.printLottoCount(lottoCount);
 
-    let lottoArray: number[][] = [];
-    for (let i = 0; i < lottoCount; i++) {
-      const randomNumbers: number[] = Random.pickUniqueNumbersInRange(1, 45, 6);
-      const lotto: Lotto = new Lotto(randomNumbers);
-      lottoArray.push(lotto.numbers);
-      this.outputView.printLottoNumbers(lotto.numbers);
-    }
+    let lottoArray: number[][] = this.issueLotto(lottoCount);
 
     const winningNumbers: number[] = await this.inputView.inputWinningNumbers();
     const bonusNumber: number = await this.inputView.inputBonusNumber();
 
-    let winningCountMap: Map<string, number> = new Map();
-    let winningCount: number;
-
     // 사용자가 구매한 로또 번호와 당첨 번호를 비교
+    const winningCountMap: Map<string, number> = this.calculateWinningCounts(lottoArray, winningNumbers, bonusNumber);
+
+    const totalWinningAmount: number = this.calculateTotalWinningAmount(winningCountMap);
+    const revenue: string = this.calculateRevenue(purchaseAmount, totalWinningAmount);
+    this.outputView.printWinningStatistics(winningCountMap, revenue);
+  }
+
+  private calculateWinningCounts(lottoArray: number[][], winningNumbers: number[], bonusNumber: number): Map<string, number> {
+    let winningCount: number;
+    let winningCountMap: Map<string, number> = new Map();
+
     lottoArray.forEach((lottoNumber: number[]): void => {
       const matchingCount = lottoNumber.filter(num => winningNumbers.includes(num)).length;
       const isBonusMatch = lottoNumber.includes(bonusNumber);
@@ -66,11 +68,18 @@ class App {
         winningCountMap.set('5등', winningCount);
       }
     })
+    return winningCountMap;
+  }
 
-    const totalWinningAmount: number = this.calculateTotalWinningAmount(winningCountMap);
-    const revenue: string = this.calculateRevenue(purchaseAmount, totalWinningAmount);
-
-    this.outputView.printWinningStatistics(winningCountMap, revenue);
+  private issueLotto(lottoCount: number): number[][] {
+    let lottoArray: number[][] = [];
+    for (let i = 0; i < lottoCount; i++) {
+      const randomNumbers: number[] = Random.pickUniqueNumbersInRange(1, 45, 6);
+      const lotto: Lotto = new Lotto(randomNumbers);
+      lottoArray.push(lotto.numbers);
+      this.outputView.printLottoNumbers(lotto.numbers);
+    }
+    return lottoArray;
   }
 
   private calculateTotalWinningAmount(winningCountMap: Map<string, number>): number {
