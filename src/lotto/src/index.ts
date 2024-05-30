@@ -1,4 +1,5 @@
 import App from "./controller/App";
+import {ConsoleInputView} from "./view/ConsoleInputView";
 
-const app = new App();
+const app: App = new App(new ConsoleInputView());
 app.play();

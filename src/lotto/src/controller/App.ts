@@ -1,17 +1,14 @@
 import Lotto from "../model/Lotto";
 import Console from "../../../utils/Console";
 import Random from "../../../utils/Random";
-import ValidationPipe from "../view/ValidationPipe";
+import {InputView} from "../view/InputView";
 
 class App {
+
+  constructor(private readonly inputView: InputView) {}
+
   async play(): Promise<void> {
-    const purchaseAmountInput: string = await Console.readLineAsync('구입금액을 입력해주세요.\n');
-    const purchaseAmount: number = Number(purchaseAmountInput);
-
-    if (isNaN(purchaseAmount)) {
-      Console.print("[ERROR]");
-    }
-
+    const purchaseAmount: number = await this.inputView.inputPurchaseAmount();
     const lottoCount: number = purchaseAmount / 1000;
 
     Console.print(`${lottoCount}개를 구매했습니다.`);
@@ -23,11 +20,8 @@ class App {
       Console.print(`[${lotto.numbers.join(', ')}]`);
     }
 
-    const winningNumbersInput: string = await Console.readLineAsync('\n당첨 번호를 입력해 주세요.\n');
-    const winningNumbers: number[] = ValidationPipe.parseNumberArray(winningNumbersInput);
-
-    const bonusNumberInput: string = await Console.readLineAsync('\n보너스 번호를 입력해주세요.\n');
-    const bonusNumber: number = parseInt(bonusNumberInput);
+    const winningNumbers: number[] = await this.inputView.inputWinningNumbers();
+    const bonusNumber: number = await this.inputView.inputBonusNumber();
 
     let winningCountMap: Map<string, number> = new Map();
     let winningCount: number;
