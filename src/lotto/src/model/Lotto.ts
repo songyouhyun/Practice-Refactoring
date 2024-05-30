@@ -27,7 +27,7 @@ class Lotto {
     }
   }
 
-  get numbers() {
+  get numbers(): number[] {
     return this._numbers;
   }
 }

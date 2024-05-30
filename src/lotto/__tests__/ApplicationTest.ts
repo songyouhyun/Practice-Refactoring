@@ -2,6 +2,7 @@ import App from "../src/controller/App";
 import Console from "../../utils/Console";
 import Random from "../../utils/Random";
 import {ConsoleInputView} from "../src/view/ConsoleInputView";
+import {ConsoleOutputView} from "../src/view/ConsoleOutputView";
 
 const mockQuestions = (inputs: string[]) => {
   Console.readLineAsync = jest.fn();
@@ -38,7 +39,7 @@ const runException = async (input: string) => {
   mockQuestions([input, ...INPUT_NUMBERS_TO_END]);
 
   // when
-  const app: App = new App(new ConsoleInputView());
+  const app: App = new App(new ConsoleInputView(), new ConsoleOutputView());
   await app.play();
 
   // then
@@ -67,7 +68,7 @@ describe("로또 테스트", () => {
     mockQuestions(["8000", "1,2,3,4,5,6", "7"]);
 
     // when
-    const app: App = new App(new ConsoleInputView());
+    const app: App = new App(new ConsoleInputView(), new ConsoleOutputView());
     await app.play();
 
     // then
@@ -105,7 +106,7 @@ describe("로또 테스트", () => {
     mockQuestions(["2000", "1,2,3,4,5,6", "7"]);
 
     // when
-    const app: App = new App(new ConsoleInputView());
+    const app: App = new App(new ConsoleInputView(), new ConsoleOutputView());
     await app.play();
 
     // then
@@ -122,7 +123,6 @@ describe("로또 테스트", () => {
     ];
 
     logs.forEach((log) => {
-      console.log(log);
       expect(logSpy).toHaveBeenCalledWith(expect.stringContaining(log));
     });
   });
