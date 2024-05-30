@@ -8,7 +8,17 @@ class App {
   constructor(private readonly inputView: InputView) {}
 
   async play(): Promise<void> {
-    const purchaseAmount: number = await this.inputView.inputPurchaseAmount();
+    let purchaseAmount: number;
+
+    while (true) {
+      try {
+        purchaseAmount = await this.inputView.inputPurchaseAmount();
+        break;
+      } catch (error: any) {
+        Console.print(error.message);
+      }
+    }
+
     const lottoCount: number = purchaseAmount / 1000;
 
     Console.print(`${lottoCount}개를 구매했습니다.`);
